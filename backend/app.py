@@ -11,6 +11,7 @@ load_dotenv()
 client = MongoClient(os.getenv("MONGO_URL"))
 db = client.mongo_database
 collection = db.form_data
+todo_collection = db.todo_items
 
 @app.route('/')
 def home():
@@ -18,13 +19,21 @@ def home():
 
 @app.route('/submit', methods=['POST'])
 def submit():
-
     try:
         form_data = dict(request.form)
         collection.insert_one(form_data)
         return "Data Submitted Successfully!"
     except:
         return "Error saving data"
+
+@app.route('/add_todo', methods=['POST'])
+def add_todo():
+    try:
+        todo_data = dict(request.form)
+        todo_collection.insert_one(todo_data)
+        return "To-Do Item Added Successfully!"
+    except:
+        return "Error saving to-do item"
 
 @app.route('/api')
 def get_data():
