@@ -1,6 +1,6 @@
-# Flask Registration Form Project
+# Flask Registration & To-Do Application
 
-A simple Flask application with MongoDB Atlas integration for user registration.
+A comprehensive Flask application with MongoDB Atlas integration featuring both user registration and to-do list management functionality.
 
 ## Architecture
 
@@ -16,7 +16,7 @@ A simple Flask application with MongoDB Atlas integration for user registration.
          ▼                                        ▼
 ┌─────────────────┐                     ┌─────────────────┐
 │                 │                     │                 │
-│   HTML Form     │                     │   MongoDB       │
+│   HTML Forms    │                     │   MongoDB       │
 │   (index.html)  │                     │   Atlas         │
 │                 │                     │   (Cloud DB)    │
 └─────────────────┘                     └─────────────────┘
@@ -25,10 +25,7 @@ A simple Flask application with MongoDB Atlas integration for user registration.
 ## Project Structure
 
 ```
-3/
-├── .github/
-│   └── workflows/
-│       └── ci-gitactions.yml   # CI pipeline for builds images to be pushed to Docker hub
+to-do-flask-app/
 ├── backend/
 │   ├── app.py                  # Backend Flask application
 │   ├── requirements.txt        # Backend dependencies
@@ -40,16 +37,8 @@ A simple Flask application with MongoDB Atlas integration for user registration.
 │   ├── requirements.txt        # Frontend dependencies
 │   ├── Dockerfile              # Frontend Docker configuration
 │   └── templates/  
-│       └── index.html          # Registration form template
-├── screenshots/    
-│   ├── api-response.png        # API endpoint response
-│   ├── Error-message.png       # Error handling screenshot
-│   ├── mongodb-data.png        # MongoDB Atlas data view
-│   ├── registration-form.png   # Registration form UI
-│   └── success-message.png     # Success confirmation
-├── .gitignore                  # Git ignore file
+│       └── index.html          # Combined registration and to-do form template
 ├── docker-compose.yml          # Multi-container Docker setup
-├── Flask_MongoDB_Documented.docx # Project documentation
 └── README.md                   # Project documentation
 ```
 
@@ -57,7 +46,7 @@ A simple Flask application with MongoDB Atlas integration for user registration.
 
 ### Prerequisites
 - Python 
-- MongoDB Atlas account and cluster
+- MongoDB Atlas account 
 
 ### Backend Setup
 1. Navigate to backend directory: `cd backend`
@@ -74,86 +63,97 @@ A simple Flask application with MongoDB Atlas integration for user registration.
 ## Usage
 
 ### Local Development
-1. Configure MongoDB Atlas connection in `.env` file
+1. Configure MongoDB Atlas connection in `backend/.env` file
 2. Run backend server: `python3 backend/app.py`
 3. Run frontend server: `python3 frontend/app.py`
 4. Access the application at `http://localhost:5000`
-5. Fill the registration form and submit
+5. Use either the registration form or to-do form to submit data
 
 ### Docker Deployment
 1. Configure MongoDB Atlas connection in `backend/.env` file
 2. Build and run with Docker Compose: `docker-compose up --build`
 3. Access the application at `http://localhost:5000`
 
-### CI/CD Pipeline
-- Automatic Docker image builds on push to `tree` branch
-- Images pushed to Docker Hub:
-  - `namanss/flask-registration-frontend:latest`
-  - `namanss/flask-registration-backend:latest`
-
-## Screenshots
-
-### Registration Form
-![Registration Form](screenshots/registration-form.png)
-*Clean and professional registration form with name and email fields*
-
-### Form Submission Success
-![Success Message](screenshots/success-message.png)
-*Confirmation message after successful data submission*
-
-### Error Handling
-![Error Response](screenshots/Error-message.png)
-*Error message displayed when form submission fails*
-
-### API Response
-![API Response](screenshots/api-response.png)
-*JSON data retrieved from MongoDB Atlas via /api endpoint*
-
-### MongoDB Atlas Data
-![MongoDB Data](screenshots/mongodb-data.png)
-*Form data stored in MongoDB Atlas collection*
-
 ## Features
 
-- User registration form with MongoDB Atlas integration
-- RESTful API endpoint to retrieve submitted data
-- Professional UI design
-- Error handling for form submissions
+### Registration Form
+- User registration with name and email fields
+- Data validation and error handling
+- Professional UI design with responsive layout
+
+### To-Do Management
+- Add new to-do items with ID, name, and description
+- Separate MongoDB collection for to-do items
+- Clean and intuitive interface
+
+### Additional Features
+- RESTful API endpoints for data retrieval
+- CORS enabled for cross-origin requests
+- Environment-based configuration
+- Docker containerization support
 
 ## API Endpoints
 
-- `GET /`        - Backend status
-- `POST /submit` - Submit form data to MongoDB
-- `GET /api`     - Retrieve all submitted data as JSON
+### Backend Endpoints
+- `GET /` - Backend status check
+- `POST /submit` - Submit registration form data to MongoDB
+- `POST /add_todo` - Submit to-do item data to MongoDB
+- `GET /api` - Retrieve all registration data as JSON
+
+### Frontend Endpoints
+- `GET /` - Serve the combined registration and to-do form
+- `GET /api` - Proxy to backend API for data retrieval
 
 ## Environment Variables
 
-Create a `.env` file in the backend directory with:
+### Backend (.env file)
 ```
 MONGO_URL=your_mongodb_atlas_connection_string
 ```
-## Docker Hub links:
-Frontend Docker Image:
+
+### Frontend (optional .env file)
 ```
-https://hub.docker.com/r/namanss/flask-registration-frontend
-```
-Backend Docker Image:
-```
-https://hub.docker.com/r/namanss/flask-registration-backend
+BACKEND_URL=http://localhost:3000  # Default if not set
 ```
 
-### Data Flow:
-1. **User Interface** : Registration form served by frontend
-2. **Form Submission**: Data sent directly to backend `/submit` endpoint
-3. **Data Storage**   : Backend saves form data to MongoDB Atlas
-4. **Data Retrieval** : `/api` endpoint fetches and returns all stored data
-5. **API Access**     : Both frontend and backend expose `/api` for data access
+## Data Collections
+
+The application uses two MongoDB collections:
+1. **form_data** - Stores user registration information (name, email)
+2. **todo_items** - Stores to-do items (itemId, itemName, itemDescription)
 
 ## Technologies Used
 
-- **Backend**   : Flask, PyMongo, Python-dotenv, Flask-CORS
-- **Frontend**  : Flask, HTML, CSS, Requests
-- **Database**  : MongoDB Atlas
+- **Backend**: Flask, PyMongo, Python-dotenv, Flask-CORS
+- **Frontend**: Flask, HTML, CSS, Requests
+- **Database**: MongoDB Atlas
 - **Containerization**: Docker, Docker Compose
-- **CI/CD**: GitHub Actions
-- **Deployment**: Local development servers, Docker containers
+- **Styling**: Custom CSS with Google Fonts (Inter)
+- **Responsive Design**: Mobile-friendly interface
+
+## Data Flow
+
+1. **User Interface**: Combined form served by frontend Flask application
+2. **Form Submission**: 
+   - Registration data sent to `/submit` endpoint
+   - To-do data sent to `/add_todo` endpoint
+3. **Data Storage**: Backend saves data to appropriate MongoDB collections
+4. **Data Retrieval**: `/api` endpoint fetches and returns registration data
+5. **API Access**: Frontend provides proxy access to backend API
+
+## Development Notes
+
+- The application uses separate collections for different data types
+- CORS is enabled to allow frontend-backend communication
+- Error handling is implemented for database operations
+- Responsive design ensures good user experience on mobile devices
+- Environment variables provide flexible configuration
+
+## Future Enhancements
+
+- Add to-do item listing and management functionality
+- Implement user authentication
+- Add data validation and sanitization
+- Include unit tests
+- Add delete/update operations for to-do items
+- Implement real-time updates with WebSockets
