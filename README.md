@@ -27,19 +27,20 @@ A comprehensive Flask application with MongoDB Atlas integration featuring both 
 ```
 to-do-flask-app/
 ├── backend/
-│   ├── app.py                  # Backend Flask application
-│   ├── requirements.txt        # Backend dependencies
-│   ├── Dockerfile              # Backend Docker configuration
-│   ├── .env                    # Environment variables (not in repo)
-│   └── .env.example            # Environment variables template
+│   ├── app.py                         # Backend Flask application
+│   ├── requirements.txt               # Backend dependencies
+│   ├── Dockerfile                     # Backend Docker configuration
+│   ├── .env                           # Environment variables (not in repo)
+│   └── .env.example                   # Environment variables template
 ├── frontend/   
-│   ├── app.py                  # Frontend Flask application
-│   ├── requirements.txt        # Frontend dependencies
-│   ├── Dockerfile              # Frontend Docker configuration
-│   └── templates/  
-│       └── index.html          # Combined registration and to-do form template
-├── docker-compose.yml          # Multi-container Docker setup
-└── README.md                   # Project documentation
+│   ├── app.py                         # Frontend Flask application
+│   ├── requirements.txt               # Frontend dependencies
+│   ├── Dockerfile                     # Frontend Docker configuration
+│   └── templates/
+│       └── index.html                 # Combined registration and to-do form template
+├── git_github_workflow_updated.docx   # Report on the Project
+├── docker-compose.yml                 # Multi-container Docker setup
+└── README.md                          # Project documentation
 ```
 
 ## Setup Instructions
