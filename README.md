@@ -38,7 +38,7 @@ to-do-flask-app/
 │   ├── Dockerfile                     # Frontend Docker configuration
 │   └── templates/
 │       └── index.html                 # Combined registration and to-do form template
-├── git_github_workflow_updated.docx   # Report on the Project
+├── git_report.docx                    # Report on the Project
 ├── docker-compose.yml                 # Multi-container Docker setup
 └── README.md                          # Project documentation
 ```
